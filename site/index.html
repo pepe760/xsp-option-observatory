@@ -65,6 +65,11 @@
         </label>
       </div>
 
+      <p class="source-reference">
+        <a id="yahoo-chain" href="https://finance.yahoo.com/quote/%5EXSP/options/" target="_blank" rel="noopener noreferrer">XSP Yahoo Finance 期權鏈 ↗</a>
+        <span>延遲報價參考。定時收集等候獲准資料來源。</span>
+      </p>
+
       <article class="observation" aria-labelledby="observation-title">
         <div class="observation-heading">
           <div>
@@ -135,6 +140,7 @@
       </div>
       <dl>
         <div><dt>資料來源</dt><dd id="source-description">狀態來自本頁的觀測資料檔。</dd></div>
+        <div><dt>Yahoo Finance</dt><dd>期權鏈顯示買賣價、隱含波幅同最後成交時間。最後成交時間無法驗證兩腿買賣價的報價時間。Yahoo 網頁資料只作參考。</dd></div>
         <div><dt>到期日規則</dt><dd>以美國市場的下一個交易日做目標到期日。畫面分開顯示實際交易日、到期日同相隔的日曆日。</dd></div>
         <div><dt>短腿同翼寬</dt><dd>從價外認沽期權揀絕對 Delta 最接近目標的短腿。容許差距為 2Δ 或目標 Delta 的一半，以較細者為準。長腿要有完全吻合翼寬的行使價。</dd></div>
         <div><dt>行使價同自然價</dt><dd>有合資格觀測時，價差的自然價淨權利金按短腿 bid 減長腿 ask 計。頁面顯示的是觀測當刻的計算值，實際成交價會因當時市場而變。</dd></div>

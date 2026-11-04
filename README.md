@@ -98,6 +98,23 @@ available XSP OHLC shards against their declared byte counts and SHA-256
 hashes, then inspect a bounded header/time sample. Original source archives
 can stay in their existing private storage.
 
+### Yahoo Finance reference
+
+The symbol picker links to Yahoo Finance's own option chain for each root,
+including `^XSP` for the XSP index. The options pages label the data as delayed.
+The displayed last trade date belongs to the last transaction. It does
+not timestamp either side of the bid/ask. The chain does not display
+bid/ask size or option delta.
+
+Yahoo's [terms](https://legal.yahoo.com/tw/zh-hant/yahoo/terms/otos/index.html)
+require prior permission for automated collection. If you have an
+authorized Yahoo export you can retain, normalize it through the private
+handoff above with `source=YAHOO_FINANCE` and `source_kind=INDICATIVE`.
+Record the actual snapshot capture time separately, leave `quote_ts` and
+other unknown fields null, and retain last trade time in a separate field
+if supplied. Keep the export and derived private JSON out of Git. The
+qualification engine classifies these packets as `INDICATIVE_ONLY`.
+
 ### GitHub Pages
 
 Run `python3 build_site.py dist` and serve `dist` with a local HTTP server.

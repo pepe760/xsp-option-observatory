@@ -420,6 +420,17 @@ tbody td { color: var(--soft-ink); font-size: .88rem; font-variant-numeric: tabu
 .import-controls button:hover { background: #e2ebd8; }
 .import-controls button:disabled { cursor: wait; opacity: .65; }
 
+.source-reference {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 12px 0 0;
+  color: var(--soft-ink);
+  font-size: .86rem;
+}
+
+.source-reference a { font-weight: 650; }
+
 .methodology {
   display: grid;
   grid-template-columns: 1fr 2fr;

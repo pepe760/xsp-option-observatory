@@ -264,6 +264,9 @@ function render(refreshFilters = false) {
   const symbol = symbolSelect.value;
   const delta = Number(deltaSelect.value);
   const wing = Number(wingSelect.value);
+  const yahooSymbol = symbol === "XSP" ? "^XSP" : symbol;
+  elements["yahoo-chain"].href = `https://finance.yahoo.com/quote/${encodeURIComponent(yahooSymbol)}/options/`;
+  text("yahoo-chain", `${symbol} Yahoo Finance 期權鏈 ↗`);
   const latest = latestCombinations(rows);
   const key = keyFor(symbol, delta, wing);
   const row = selectedObservation(rows, latest.get(key), key);
