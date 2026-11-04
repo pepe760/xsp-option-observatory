@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="yue-Hant-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="用到期日、Delta 同翼寬查看美股期權價差的觀測及資料覆蓋。">
+  <meta name="theme-color" content="#152621">
+  <title>期權價差觀測站 · Options Observatory</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#monitor">跳到觀測工具</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="./" aria-label="期權價差觀測站首頁">
+        <svg aria-hidden="true" width="30" height="30" viewBox="0 0 30 30" fill="none">
+          <rect x=".5" y=".5" width="29" height="29" rx="7" stroke="currentColor"/>
+          <path d="M7 20h4v-5h4v-4h4v-3h4M7 24h16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+        <span>期權價差觀測站</span>
+      </a>
+      <span class="masthead-label" lang="en">OPTIONS OBSERVATORY</span>
+    </div>
+  </header>
+
+  <main class="wrap" id="monitor">
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow"><span class="index-dot" aria-hidden="true"></span> 美股期權研究</p>
+        <h1 id="page-title">期權價差<span>觀測台</span></h1>
+        <p class="lede">揀標的、Delta 同翼寬，查看沽出認沽價差（SPS）的到期日、資料狀態同價差組合。</p>
+      </div>
+      <div class="intro-meta">
+        <p><span>資料模式</span> <strong id="mode-label">讀取中</strong></p>
+        <p><span>資料檔更新</span> <strong id="generated-at">—</strong></p>
+        <p><span>合資格組合</span> <strong id="coverage-summary">—</strong></p>
+      </div>
+    </section>
+
+    <section class="workspace" aria-labelledby="filter-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-index">01 <span aria-hidden="true">/</span> <span lang="en">FILTERS</span></p>
+          <h2 id="filter-title">觀測篩選</h2>
+        </div>
+        <p id="data-notice" class="section-note" role="status">讀取資料狀態中。</p>
+      </div>
+      <div class="filters">
+        <label for="symbol">標的 <span lang="en">SYMBOL</span>
+          <select id="symbol">
+            <option value="XSP">XSP</option>
+            <option value="SPY">SPY</option>
+            <option value="QQQ">QQQ</option>
+            <option value="TLT">TLT</option>
+            <option value="SOXX">SOXX</option>
+          </select>
+        </label>
+        <label for="target-delta">目標 Delta <span lang="en">ABSOLUTE</span>
+          <select id="target-delta"></select>
+        </label>
+        <label for="wing">翼寬 <span lang="en">STRIKE POINTS</span>
+          <select id="wing"></select>
+        </label>
+      </div>
+
+      <article class="observation" aria-labelledby="observation-title">
+        <div class="observation-heading">
+          <div>
+            <p class="section-index">02 <span aria-hidden="true">/</span> <span lang="en">OBSERVATION</span></p>
+            <h2 id="observation-title">XSP</h2>
+            <p id="selection-summary" class="selection-summary"></p>
+          </div>
+          <span id="observation-status" class="badge" data-tone="neutral">讀取中</span>
+        </div>
+        <p id="observation-reason" class="observation-reason" aria-live="polite"></p>
+        <label id="history-field" class="history-field" for="history" hidden>本機觀測紀錄
+          <select id="history"></select>
+        </label>
+        <dl class="details">
+          <div><dt>交易日</dt><dd id="session">—</dd></div>
+          <div><dt>到期日</dt><dd id="expiry">—</dd></div>
+          <div><dt>觀測時間（美東／香港）</dt><dd id="observed-at">—</dd></div>
+          <div><dt>距到期日（日曆日）</dt><dd id="dte">—</dd></div>
+        </dl>
+        <dl class="quote-details" id="quote-details" hidden>
+          <div><dt>短腿行使價</dt><dd id="short-strike">—</dd></div>
+          <div><dt>長腿行使價</dt><dd id="long-strike">—</dd></div>
+          <div><dt>自然價淨權利金（點）</dt><dd id="natural-credit">—</dd></div>
+          <div><dt>短腿 Delta</dt><dd id="actual-short-delta">—</dd></div>
+          <div><dt>自然價平倉成本（點）</dt><dd id="natural-debit">—</dd></div>
+          <div><dt>理論最大虧損（每組，美元，未計費用）</dt><dd id="max-loss">—</dd></div>
+          <div><dt>Delta 來源</dt><dd id="greeks-source">—</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="workspace coverage" aria-labelledby="coverage-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-index">03 <span aria-hidden="true">/</span> <span lang="en">COVERAGE</span></p>
+          <h2 id="coverage-title">同組參數的資料覆蓋</h2>
+        </div>
+        <p class="section-note">每個標的顯示所選 Delta 同翼寬的最新紀錄。</p>
+      </div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="資料覆蓋表，可左右捲動">
+        <table>
+          <thead>
+            <tr><th scope="col">標的</th><th scope="col">資料狀態</th><th scope="col">交易日</th><th scope="col">到期日</th><th scope="col">觀測時間（美東／香港）</th></tr>
+          </thead>
+          <tbody id="coverage-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="workspace import-panel" aria-labelledby="import-title">
+      <div>
+        <p class="section-index">04 <span aria-hidden="true">/</span> <span lang="en">LOCAL FILE</span></p>
+        <h2 id="import-title">開啟本機觀測檔</h2>
+        <p id="import-help">揀一個私有觀測 JSON 檔（最多 4 MB）。瀏覽器只會喺呢一頁讀取檔案。重新整理頁面就會清除。</p>
+      </div>
+      <div class="import-controls">
+        <button id="choose-private" type="button" aria-describedby="import-help">選擇 JSON 檔</button>
+        <input id="private-file" type="file" accept=".json,application/json" hidden>
+        <button id="clear-private" type="button" hidden>清除本機資料</button>
+        <p id="import-feedback" role="status"></p>
+      </div>
+    </section>
+
+    <section class="methodology" aria-labelledby="methodology-title">
+      <div>
+        <p class="section-index">05 <span aria-hidden="true">/</span> <span lang="en">DATA NOTES</span></p>
+        <h2 id="methodology-title">點樣讀呢個頁面</h2>
+      </div>
+      <dl>
+        <div><dt>資料來源</dt><dd id="source-description">狀態來自本頁的觀測資料檔。</dd></div>
+        <div><dt>到期日規則</dt><dd>以美國市場的下一個交易日做目標到期日。畫面分開顯示實際交易日、到期日同相隔的日曆日。</dd></div>
+        <div><dt>短腿同翼寬</dt><dd>從價外認沽期權揀絕對 Delta 最接近目標的短腿。容許差距為 2Δ 或目標 Delta 的一半，以較細者為準。長腿要有完全吻合翼寬的行使價。</dd></div>
+        <div><dt>行使價同自然價</dt><dd>有合資格觀測時，價差的自然價淨權利金按短腿 bid 減長腿 ask 計。頁面顯示的是觀測當刻的計算值，實際成交價會因當時市場而變。</dd></div>
+        <div><dt>畫面用途</dt><dd>呢度記錄資料覆蓋同價差觀測，盈虧要另外用完整的成交、到期或平倉資料先可以計。</dd></div>
+        <div><dt>缺值</dt><dd>「—」代表該欄缺資料。交易日同到期日按美國市場日期顯示。</dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <span>期權價差觀測站</span>
+    <span lang="en">OPTIONS OBSERVATORY</span>
+  </footer>
+  <noscript><p class="wrap noscript">請啟用 JavaScript 先可以讀取同篩選觀測資料。</p></noscript>
+</body>
+</html>
