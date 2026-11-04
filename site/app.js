@@ -8,7 +8,7 @@ const SYMBOLS = {
   SOXX: [5, 10, 15, 20],
 };
 
-const TARGET_DELTAS = [0.03, 0.05, 0.07, 0.10, 0.15, 0.20, 0.25];
+const TARGET_DELTAS = [0.03, 0.05, 0.07, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.40];
 const QUOTE_FIELDS = {
   short_strike: "short-strike",
   long_strike: "long-strike",

@@ -14,8 +14,8 @@ grid and collector status.
 | TLT | 1, 2, 5, 10 |
 | SOXX | 5, 10, 15, 20 |
 
-The short put magnitude targets are 0.03, 0.05, 0.07, 0.10, 0.15, 0.20 and
-0.25. Each target uses a band of min(0.02, half the target). The closest
+The short put magnitude targets are 0.03, 0.05, 0.07, 0.08, 0.10, 0.12,
+0.15, 0.20, 0.25, 0.30 and 0.40. Each target uses a band of min(0.02, half the target). The closest
 eligible OTM standard put is selected first. Ties select the lower strike.
 An exact wing must exist in the same root, expiry and trading class. A
 missing wing or an unavailable delta remains a coverage gap.
